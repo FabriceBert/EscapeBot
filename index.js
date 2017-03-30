@@ -29,7 +29,7 @@ class ApiAiRecognizer {
     }
 }
 
-const recognizer = new   ApiAiRecognizer('69c06ee86020433f90e0edeb298f9433');
+const recognizer = new   ApiAiRecognizer('');
 const intents = new builder.IntentDialog({
     recognizers: [recognizer],
 });
@@ -40,7 +40,7 @@ server.listen(3978, () => {
 });
 
 const connector = new builder.ChatConnector({
-    appId:'',
+        appId:'',
     appPassword:''
 });
 
@@ -49,36 +49,58 @@ server.post('/', connector.listen());
 
 bot.dialog('/', intents);
 
-intents.matches(/play/i, [
-        (session) => {
-        session.beginDialog('/order_escape');
-}
+intents.onDefault([
+    (session) => {
+        session.send(
+            'Hi Dude !'
+        );
+    }
 ]);
 
-intents.matches(/do/i, [
+intents.matches('order_playing', [
         (session) => {
-        session.beginDialog('/order_escape');
-}
+            builder.Prompts.text(session,
+                'I feel like you want to change your ideas or move with your friends ;) What do you want to do ?'
+            );
+        }
 ]);
+
 
 intents.matches('order_escape', [
         (session, args) => {
-        session.send(
-        'Hi Dude ! You want to play an %s ! Okay !!',
-        args.entities.game_type
-    );
-builder.Prompts.confirm(session, 'Do you know the escape name ?')
-},
-(session, results) =>
-{
-    if (results.response) {
-        builder.Prompts.text(session,
-            'Ok I would find a escape room'
-        );
-    } else {
-        builder.Prompts.text(session,
-            'Ok I shut up'
-        );
-    }
-}
+            session.send(
+                'You want to play an %s ! Okay !!',
+                args.entities.game_type
+            );
+        builder.Prompts.confirm(session, 'Do you know the escape name ?')
+        },
+        (session, results) =>
+        {
+            if (results.response) {
+                builder.Prompts.text(session,
+                    'Ok I would find a escape room'
+                );
+                session.reset(results);
+            } else {
+                builder.Prompts.text(session,
+                    'Ok I shut up'
+                );
+                session.reset(results);
+                builder.Prompts.confirm(session, 'For 10h ?')
+            }
+        },
+        (session, results) =>
+        {
+            if (results.response) {
+                builder.Prompts.text(session,
+                    'Ok I would find a escape room at 10h'
+                );
+            } else {
+                builder.Prompts.text(session,
+                    'Ok I shut up'
+                );
+                session.reset(results)
+            }
+        }
+
 ]);
