@@ -28,16 +28,16 @@ class MyScraper(Spider):
                 item = EscapeItem()
                 # Recuperation de l'url de chaque page d'escape
                 # On supprime le 'window.open(' .* ') de l'url pour l'utiliser
-                item['url'] = x.xpath('@onclick').extract_first()
-                item['url'] = path_url + item['url'][13:len(item['url'])-2]
+                item['urlEscape'] = x.xpath('@onclick').extract_first()
+                item['urlEscape'] = path_url + item['urlEscape'][13:len(item['urlEscape'])-2]
 
                 item['name'] = x.xpath('.//div[2]/div[1]/div[1]/text()').extract_first()
                 item['room'] = x.xpath('.//div[2]/h2/text()').extract_first()
-                item['prix'] = x.xpath('.//div[2]/div[2]/div[2]/div/div[1]/text()').extract_first()
+                item['price'] = x.xpath('.//div[2]/div[2]/div[2]/div/div[1]/text()').extract_first()
 
                 # On se dirige vers la page de l'escape courant
                 yield Request(
-                    url=item['url'],
+                    url=item['urlEscape'],
                     callback=self.parse_escape,
                     meta={'escape_item': item},
                 )
@@ -59,14 +59,14 @@ class MyScraper(Spider):
                 if not escape_el.xpath('./h3/text()').extract_first():
                     escape_el = response.xpath('//*[@id="body"]/main/div[3]/div[1]/div[3]')
         # Recuperation des informations generales de l'escape
-        item['categorie'] = escape_el.xpath('./div/span/text()').extract_first()
-        item['capacite'] = escape_el.xpath('.//ul[1]/li[2]/span/text()').extract_first()
-        item['difficulte'] = escape_el.xpath('.//ul[1]/li[3]/span/text()').extract_first()
-        item['langue'] = escape_el.xpath('.//ul[2]/li[1]/span/text()').extract_first()
-        item['nbSalle'] = escape_el.xpath('.//ul[2]/li[2]/span/text()').extract_first()
-        item['handicape'] = escape_el.xpath('.//ul[2]/li[3]/span/text()').extract_first()
+        item['category'] = escape_el.xpath('./div/span/text()').extract_first()
+        item['capacity'] = escape_el.xpath('.//ul[1]/li[2]/span/text()').extract_first()
+        item['level'] = escape_el.xpath('.//ul[1]/li[3]/span/text()').extract_first()
+        item['language'] = escape_el.xpath('.//ul[2]/li[1]/span/text()').extract_first()
+        item['nbRoom'] = escape_el.xpath('.//ul[2]/li[2]/span/text()').extract_first()
+        item['disabled'] = escape_el.xpath('.//ul[2]/li[3]/span/text()').extract_first()
 
-        item['disponibilites'] = {}
+        item['availabilities'] = []
         listeHour = []
         jour = ''
         # On boucle sur les div de chaque semaine
@@ -82,8 +82,14 @@ class MyScraper(Spider):
                 if data[0].isdigit() or data.startswith('Plus'):
                     listeHour.append(data)
                 else:
+                    if jour:
+                        dispo = {
+                            'dayName': jour,
+                            'hours': listeHour
+                        }
+                        item['availabilities'].append(dispo)
                     jour = data
-                    item['disponibilites'][jour] = {}
                     listeHour = []
-                item['disponibilites'][jour] = listeHour
+
+
         yield item

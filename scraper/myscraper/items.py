@@ -5,14 +5,14 @@ from scrapy import Item, Field
 
 class EscapeItem(Item):
 
-	url = Field()
+	urlEscape = Field()
 	name = Field()
 	room = Field()
-	difficulte = Field()
-	prix = Field()
-	capacite = Field()
-	langue = Field()
-	nbSalle = Field()
-	handicape = Field()
-	categorie = Field()
-	disponibilites = Field()
+	level = Field()
+	price = Field()
+	capacity = Field()
+	language = Field()
+	nbRoom = Field()
+	disabled = Field()
+	category = Field()
+	availabilities = Field()

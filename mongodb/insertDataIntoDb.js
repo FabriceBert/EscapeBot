@@ -1,10 +1,10 @@
-var MongoClient = require("mongodb").MongoClient;
-var fs = require('fs');
-var DB_USER = 'admin';
-var DB_PASSWORD = 'adminEscapeBot';
-var DB_URL= 'ds145220.mlab.com';
-var DB_PORT = '45220';
-var DB_NAME = 'escapebot';
+const MongoClient = require("mongodb").MongoClient;
+const fs = require('fs');
+const DB_USER = 'admin';
+const DB_PASSWORD = 'adminEscapeBot';
+const DB_URL= 'ds145220.mlab.com';
+const DB_PORT = '45220';
+const DB_NAME = 'escapebot';
 
 /**
  * Fonction qui permet de se connecter a la base de donnees MongoDB
@@ -15,17 +15,16 @@ function connect() {
         if (error) return console.log(error);
         console.log("Connecté à la base de données '"+DB_NAME+"'");
 
-        var collectionName = 'escape';
-        var jsonPath = '../scraper/escapes.json';
+        let collectionName = 'escape';
+        let jsonPath = '../scraper/escapes.json';
         deleteData(db,collectionName);
         readAsync(jsonPath)
-            .then((data) => {
+        .then((data) => {
             insertData(db,collectionName,data)
         })
         .catch((err) => {
             console.log(err);
-          });
-
+        });
     });
 }
 
@@ -37,11 +36,10 @@ function connect() {
  */
 function readAsync(jsonPath) {
     return new Promise((resolve, reject) => {
-        fs.readFile(jsonPath, 'utf8', (err, data) => {
+            fs.readFile(jsonPath, 'utf8', (err, data) => {
             if (err) return reject(err);
-
-            return resolve(JSON.parse(data));
-        })
+                return resolve(JSON.parse(data));
+            })
     });
 }
 
@@ -52,9 +50,8 @@ function readAsync(jsonPath) {
  * @param json : l'ensemble des donnes json a inserer
  */
 function insertData(db,collectionName,json){
-    var collection = db.collection(collectionName);
+    let collection = db.collection(collectionName);
     collection.insert(json, function (err, doc) {
-        console.log(json);
         if (err) throw err;
     });
 }
@@ -65,7 +62,7 @@ function insertData(db,collectionName,json){
  * @param collectionName  : le nom de la collection dans laquelle on souhaite inserer les donnes
  */
 function deleteData(db,collectionName){
-    var collection = db.collection(collectionName);
+    let collection = db.collection(collectionName);
     collection.remove();
 }
 
