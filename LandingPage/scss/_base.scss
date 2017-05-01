@@ -1,0 +1,23 @@
+body {
+    font-family: $text-font;
+    font-size: $font-size-base;
+    font-weight: 300;
+    background-color: #262626 ; 
+}
+
+a {
+    transition-duration: $default-transition-duration;
+
+    &:hover {
+        color: $brand-primary;
+
+        text-decoration: none,
+    }
+}
+
+* {
+    &.active,
+    &:focus {
+        outline: none !important;
+    }
+}

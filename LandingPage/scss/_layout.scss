@@ -1,0 +1,23 @@
+section {
+    padding-top: 70px;
+    padding-bottom: 70px;
+}
+
+.content {
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+
+    overflow: hidden;
+}
+
+.column {
+    position: relative;
+    float: left;
+
+    width: 33.33333%;
+
+    padding-left: 15px;
+    padding-right: 15px;
+}

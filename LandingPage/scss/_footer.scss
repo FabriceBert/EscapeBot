@@ -1,0 +1,116 @@
+.footer {
+    $footer-col-list-height: 30px;
+
+    margin-bottom: 5%;
+    background: url('../assets/images/footer/prionner.png') no-repeat center top;
+    background-size: auto 114%;
+    background-attachment: fixed;
+
+    @media screen and (min-width: 1450px) {
+        background-size: 100% auto;
+    }
+
+    .footer-col {
+
+        color: $body-bg;
+
+        @media screen and (min-width: $screen-md+1) {
+            height: 200px;
+        }
+
+        &.footer-col-spacing {
+            @media screen and (min-width: $screen-md+1) {
+                padding-left: 25px;
+            }
+
+            @media screen and (max-width: $screen-md) {
+                margin-top: 45px;
+            }
+        }
+    }
+
+    .footer-col-title {
+        display: table;
+        margin: 0 auto;
+        margin-bottom: 20px;
+        font-size: 20px;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: $brand-primary;
+    }
+
+    .footer-col-text {
+        line-height: 20px;
+    }
+
+    .footer-col-logo {
+        display: table;
+        margin: 0 auto;
+        margin-top: 10px;
+
+        img {
+            width: auto;
+            height: 60px;
+        }
+    }
+
+    .footer-col-list {
+
+        display: table;
+        padding: 0;
+        margin: 0 auto;
+
+        list-style: none;
+
+        li {
+            margin-bottom: 10px;
+
+            line-height: $footer-col-list-height;
+
+            transition-duration: $default-transition-duration;
+            cursor: pointer;
+
+            a {
+                color: white;
+            }
+
+            &:hover {
+                color: $brand-primary;
+
+                a {
+                    color: $brand-primary;
+                }
+
+                .footer-col-list-icon {
+                    color: $body-bg;
+                    background: $brand-primary;
+
+                    transform: rotate(180deg);
+                }
+            }
+        }
+    }
+
+    .footer-col-list-icon {
+
+        margin-right: 5px;
+
+        border: 1px solid $body-bg;
+
+        font-size: 14px;
+
+        transition-duration: $default-transition-duration;
+
+        @include icon-radius($footer-col-list-height);
+
+        .fa {
+            top: -1px;
+        }
+    }
+
+    .footer-copyright {
+        margin-top: 70px;
+        font-size: 12px;
+        text-align: center;
+    }
+}

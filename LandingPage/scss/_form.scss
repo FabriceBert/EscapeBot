@@ -1,0 +1,25 @@
+input {
+    vertical-align: middle;
+
+    border: none;
+}
+
+.btn-default {
+    color: $body-bg;
+    border: 2px solid $brand-primary;
+
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+
+    background: $brand-primary;
+
+    border-radius: 0;
+    transition-duration: $default-transition-duration;
+
+    &:hover {
+        color: $body-bg;
+        background: $brand-primary;
+        border-color: $body-bg;
+    }
+}

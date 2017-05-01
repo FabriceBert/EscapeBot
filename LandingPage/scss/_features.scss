@@ -1,0 +1,49 @@
+.features {
+    $feature-title-height: 50px;
+
+    .feature {
+        &:hover {
+            background: #171717; 
+            .feature-title-icon {
+                color: $body-bg;
+                background: $brand-primary;
+
+                transform: rotate(180deg);
+            }
+        }
+    }
+
+    .feature-title {
+        padding-top: 10px;
+
+        color: $brand-primary;
+
+        font-size: 30px;
+        font-weight: 700;
+
+        line-height: $feature-title-height;
+    }
+
+    .feature-title-icon {
+        margin-right: 5px;
+
+        border: 2px solid $brand-primary;
+
+        font-size: 25px;
+
+        transition-duration: 1s;
+
+        @include icon-radius($feature-title-height); 
+
+        .fa {
+            top: -3px;
+        }
+    }
+
+    .feature-text {
+        margin-top: 12px;
+
+        line-height: 25px;  
+        color: white;   
+    }
+}
